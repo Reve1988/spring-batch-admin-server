@@ -23,7 +23,7 @@
 			, exit_message AS exitMessage
 			, last_updated AS lastUpdated
 		FROM
-			batch_step_execution
+			${tablePrefix}_step_execution
 		WHERE
 			step_execution_id = #{stepExecutionId}
 	</select>
@@ -48,7 +48,7 @@
 			, exit_message AS exitMessage
 			, last_updated AS lastUpdated
 		FROM
-			batch_step_execution
+			${tablePrefix}_step_execution
 		WHERE
 			job_execution_id = #{jobExecutionId}
 		ORDER BY
@@ -59,21 +59,21 @@
 		SELECT
 			NVL(MAX(step_execution_id), 0) AS maxStepExecutionId
 		FROM
-			BATCH_STEP_EXECUTION
+			${tablePrefix}_step_execution
 		WHERE
 			job_execution_id = #{jobExecutionId}
 	</select>
 
 	<delete id="deleteStepExecutionContextLessThan">
 		DELETE FROM
-			BATCH_STEP_EXECUTION_CONTEXT
+			${tablePrefix}_step_execution_context
 		WHERE
 			step_execution_id <![CDATA[<]]> #{stepExecutionId}
 	</delete>
 
 	<delete id="deleteStepExecutionLessThan">
 		DELETE FROM
-			BATCH_STEP_EXECUTION
+			${tablePrefix}_step_execution
 		WHERE
 			step_execution_id <![CDATA[<]]> #{stepExecutionId}
 	</delete>

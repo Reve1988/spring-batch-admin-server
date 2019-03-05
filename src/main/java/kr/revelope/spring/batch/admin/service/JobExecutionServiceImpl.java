@@ -11,26 +11,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import kr.revelope.spring.batch.admin.mapper.JobExecutionMapper;
 import kr.revelope.spring.batch.admin.model.JobExecution;
 import kr.revelope.spring.batch.admin.model.JobExecutionParam;
+import kr.revelope.spring.batch.admin.repository.JobExecutionRepository;
 
 @Service
 public class JobExecutionServiceImpl implements JobExecutionService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JobExecutionServiceImpl.class);
 	private static final DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-	private final JobExecutionMapper jobExecutionMapper;
+	private final JobExecutionRepository jobExecutionRepository;
 
 	@Autowired
 	public JobExecutionServiceImpl(
-			JobExecutionMapper jobExecutionMapper) {
-		this.jobExecutionMapper = jobExecutionMapper;
+			JobExecutionRepository jobExecutionRepository) {
+		this.jobExecutionRepository = jobExecutionRepository;
 	}
 
 	@Override
 	public JobExecution getJobExecution(long jobExecutionId) {
-		return jobExecutionMapper.selectJobExecution(jobExecutionId);
+		return jobExecutionRepository.selectJobExecution(jobExecutionId);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class JobExecutionServiceImpl implements JobExecutionService {
 			return 0;
 		}
 
-		return jobExecutionMapper.selectJobExecutionTotalCount(jobNameList);
+		return jobExecutionRepository.selectJobExecutionTotalCount(jobNameList);
 	}
 
 	@Override
@@ -48,23 +48,23 @@ public class JobExecutionServiceImpl implements JobExecutionService {
 			return new ArrayList<>();
 		}
 
-		return jobExecutionMapper.selectJobExecutionList(jobNameList, start, length);
+		return jobExecutionRepository.selectJobExecutionList(jobNameList, start, length);
 	}
 
 	@Override
 	public long getMaxJobExecutionIdBefore(LocalDate date) {
-		return jobExecutionMapper.selectMaxJobExecutionIdLessThan(date.format(DEFAULT_DATE_FORMATTER));
+		return jobExecutionRepository.selectMaxJobExecutionIdLessThan(date.format(DEFAULT_DATE_FORMATTER));
 	}
 
 	@Override
 	public List<JobExecutionParam> getJobExecutionParamList(long jobExecutionId) {
-		return jobExecutionMapper.selectJobExecutionParamList(jobExecutionId);
+		return jobExecutionRepository.selectJobExecutionParamList(jobExecutionId);
 	}
 
 	@Override
 	public void deleteLessThan(long jobExecutionId) {
-		jobExecutionMapper.deleteJobExecutionParamLessThan(jobExecutionId);
-		jobExecutionMapper.deleteJobExecutionContextLessThan(jobExecutionId);
-		jobExecutionMapper.deleteJobExecutionLessThan(jobExecutionId);
+		jobExecutionRepository.deleteJobExecutionParamLessThan(jobExecutionId);
+		jobExecutionRepository.deleteJobExecutionContextLessThan(jobExecutionId);
+		jobExecutionRepository.deleteJobExecutionLessThan(jobExecutionId);
 	}
 }

@@ -7,7 +7,7 @@ import kr.revelope.spring.batch.admin.model.JobInstance;
 
 @Mapper
 public interface JobInstanceMapper {
-	JobInstance selectJobInstance(@Param("jobInstanceId") long jobInstanceId);
+	JobInstance selectJobInstance(@Param("jobInstanceId") long jobInstanceId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteJobInstanceLessThan(@Param("jobInstanceId") long jobInstanceId);
+	void deleteJobInstanceLessThan(@Param("jobInstanceId") long jobInstanceId, @Param("tablePrefix") String tablePrefix);
 }
