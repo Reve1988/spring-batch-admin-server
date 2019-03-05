@@ -18,8 +18,8 @@
 			, exe.last_updated AS lastUpdated
 			, exe.job_configuration_location AS jobConfigurationLocation
 		FROM
-			batch_job_instance inst
-			, batch_job_execution exe
+			${tablePrefix}_job_instance inst
+			, ${tablePrefix}_job_execution exe
 		WHERE
 			inst.job_instance_id = exe.job_instance_id
 		  AND exe.job_execution_id = #{jobExecutionId}
@@ -29,8 +29,8 @@
 		SELECT
 			COUNT(1)
 		FROM
-			batch_job_instance inst
-			, batch_job_execution exe
+			${tablePrefix}_job_instance inst
+			, ${tablePrefix}_job_execution exe
 		WHERE
 			inst.job_instance_id = exe.job_instance_id
 			AND inst.job_name IN
@@ -83,8 +83,8 @@
 					, exe.last_updated AS lastUpdated
 					, exe.job_configuration_location AS jobConfigurationLocation
 				FROM
-					batch_job_instance inst
-					, batch_job_execution exe
+					${tablePrefix}_job_instance inst
+					, ${tablePrefix}_job_execution exe
 				WHERE
 					inst.job_instance_id = exe.job_instance_id
 					AND inst.job_name IN
@@ -103,7 +103,7 @@
 		SELECT
 			NVL(MAX(job_execution_id), 0) AS maxJabExecutionId
 		FROM
-			batch_job_execution
+			${tablePrefix}_job_execution
 		WHERE
 			create_time <![CDATA[<]]> TO_DATE(#{createDate}, 'yyyyMMdd')
 	</select>
@@ -118,28 +118,28 @@
 			, double_val AS doubleValue
 			, identifying AS identifying
 		FROM
-			batch_job_execution_params
+			${tablePrefix}_job_execution_params
 		WHERE
 			job_execution_id = #{jobExecutionId}
 	</select>
 
 	<delete id="deleteJobExecutionParamLessThan">
 		DELETE FROM
-			batch_job_execution_params
+			${tablePrefix}_job_execution_params
 		WHERE
 			job_execution_id <![CDATA[<]]> #{jobExecutionId}
 	</delete>
 
 	<delete id="deleteJobExecutionContextLessThan">
 		DELETE FROM
-			batch_job_execution_context
+			${tablePrefix}_job_execution_context
 		WHERE
 			job_execution_id <![CDATA[<]]> #{jobExecutionId}
 	</delete>
 
 	<delete id="deleteJobExecutionLessThan">
 		DELETE FROM
-			batch_job_execution
+			${tablePrefix}_job_execution
 		WHERE
 			job_execution_id <![CDATA[<]]> #{jobExecutionId}
 	</delete>

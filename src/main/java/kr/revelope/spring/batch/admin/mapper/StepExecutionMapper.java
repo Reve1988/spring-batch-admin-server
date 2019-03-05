@@ -9,13 +9,13 @@ import kr.revelope.spring.batch.admin.model.StepExecution;
 
 @Mapper
 public interface StepExecutionMapper {
-	StepExecution selectStepExecution(@Param("stepExecutionId") long stepExecutionId);
+	StepExecution selectStepExecution(@Param("stepExecutionId") long stepExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	List<StepExecution> selectStepExecutionList(@Param("jobExecutionId") long jobExecutionId);
+	List<StepExecution> selectStepExecutionList(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	long selectMaxStepExecutionId(@Param("jobExecutionId") long jobExecutionId);
+	long selectMaxStepExecutionId(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteStepExecutionContextLessThan(@Param("stepExecutionId") long stepExecutionId);
+	void deleteStepExecutionContextLessThan(@Param("stepExecutionId") long stepExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteStepExecutionLessThan(@Param("stepExecutionId") long stepExecutionId);
+	void deleteStepExecutionLessThan(@Param("stepExecutionId") long stepExecutionId, @Param("tablePrefix") String tablePrefix);
 }

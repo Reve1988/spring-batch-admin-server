@@ -10,14 +10,14 @@
 			, job_name AS jobName
 			, job_key AS jobKey
 		FROM
-			batch_job_instance
+			${tablePrefix}_job_instance
 		WHERE
 			job_instance_id = #{jobInstanceId}
 	</select>
 
 	<delete id="deleteJobInstanceLessThan">
 		DELETE FROM
-			batch_job_instance
+			${tablePrefix}_job_instance
 		WHERE
 			job_instance_id <![CDATA[<]]> #{jobInstanceId}
 	</delete>

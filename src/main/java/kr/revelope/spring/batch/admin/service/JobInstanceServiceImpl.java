@@ -5,28 +5,28 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.revelope.spring.batch.admin.mapper.JobInstanceMapper;
 import kr.revelope.spring.batch.admin.model.JobExecution;
 import kr.revelope.spring.batch.admin.model.JobInstance;
+import kr.revelope.spring.batch.admin.repository.JobInstanceRepository;
 
 @Service
 public class JobInstanceServiceImpl implements JobInstanceService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JobInstanceServiceImpl.class);
 
-	private final JobInstanceMapper jobInstanceMapper;
+	private final JobInstanceRepository jobInstanceRepository;
 	private final JobExecutionService jobExecutionService;
 
 	@Autowired
 	public JobInstanceServiceImpl(
-			JobInstanceMapper jobInstanceMapper,
+			JobInstanceRepository jobInstanceRepository,
 			JobExecutionService jobExecutionService) {
-		this.jobInstanceMapper = jobInstanceMapper;
+		this.jobInstanceRepository = jobInstanceRepository;
 		this.jobExecutionService = jobExecutionService;
 	}
 
 	@Override
 	public JobInstance getJobInstance(long jobInstanceId) {
-		return jobInstanceMapper.selectJobInstance(jobInstanceId);
+		return jobInstanceRepository.selectJobInstance(jobInstanceId);
 	}
 
 	@Override
@@ -36,6 +36,6 @@ public class JobInstanceServiceImpl implements JobInstanceService {
 			return;
 		}
 
-		jobInstanceMapper.deleteJobInstanceLessThan(jobExecution.getJobInstanceId());
+		jobInstanceRepository.deleteJobInstanceLessThan(jobExecution.getJobInstanceId());
 	}
 }
