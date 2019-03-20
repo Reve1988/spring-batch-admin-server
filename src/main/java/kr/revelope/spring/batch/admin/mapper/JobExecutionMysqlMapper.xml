@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.revelope.spring.batch.admin.mapper.JobExecutionOracleMapper">
+<mapper namespace="kr.revelope.spring.batch.admin.mapper.JobExecutionMysqlMapper">
 	<select id="selectJobExecution" resultType="jobExecution">
 		SELECT
 			exe.job_execution_id AS jobExecutionId
