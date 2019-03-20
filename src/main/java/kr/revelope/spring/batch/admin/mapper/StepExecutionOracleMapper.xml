@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.revelope.spring.batch.admin.mapper.StepExecutionOracleMapper">
+	<select id="selectStepExecution" resultType="stepExecution">
+		SELECT
+			step_execution_id AS stepExecutionId
+		    , version AS version
+			, step_name AS stepName
+			, start_time AS startTime
+			, end_time AS endTime
+			, status AS status
+			, commit_count AS commitCount
+			, read_count AS readCount
+			, filter_count AS filterCount
+			, write_count AS writeCount
+			, read_skip_count AS readSkipCount
+			, write_skip_count AS writeSkipCount
+			, process_skip_count AS processSkipCount
+			, rollback_count AS rollbackCount
+			, exit_code AS exitCode
+			, exit_message AS exitMessage
+			, last_updated AS lastUpdated
+		FROM
+			${tablePrefix}_step_execution
+		WHERE
+			step_execution_id = #{stepExecutionId}
+	</select>
+
+	<select id="selectStepExecutionList" resultType="stepExecution">
+		SELECT
+			step_execution_id AS stepExecutionId
+			, version AS version
+			, step_name AS stepName
+			, start_time AS startTime
+			, end_time AS endTime
+			, status AS status
+			, commit_count AS commitCount
+			, read_count AS readCount
+			, filter_count AS filterCount
+			, write_count AS writeCount
+			, read_skip_count AS readSkipCount
+			, write_skip_count AS writeSkipCount
+			, process_skip_count AS processSkipCount
+			, rollback_count AS rollbackCount
+			, exit_code AS exitCode
+			, exit_message AS exitMessage
+			, last_updated AS lastUpdated
+		FROM
+			${tablePrefix}_step_execution
+		WHERE
+			job_execution_id = #{jobExecutionId}
+		ORDER BY
+			step_execution_id DESC
+    </select>
+
+	<select id="selectMaxStepExecutionId" resultType="long">
+		SELECT
+			NVL(MAX(step_execution_id), 0) AS maxStepExecutionId
+		FROM
+			${tablePrefix}_step_execution
+		WHERE
+			job_execution_id = #{jobExecutionId}
+	</select>
+
+	<delete id="deleteStepExecutionContextLessThan">
+		DELETE FROM
+			${tablePrefix}_step_execution_context
+		WHERE
+			step_execution_id <![CDATA[<]]> #{stepExecutionId}
+	</delete>
+
+	<delete id="deleteStepExecutionLessThan">
+		DELETE FROM
+			${tablePrefix}_step_execution
+		WHERE
+			step_execution_id <![CDATA[<]]> #{stepExecutionId}
+	</delete>
+</mapper>

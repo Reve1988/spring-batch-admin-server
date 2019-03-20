@@ -5,44 +5,72 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
-import kr.revelope.spring.batch.admin.mapper.StepExecutionMapper;
+import kr.revelope.spring.batch.admin.common.type.DatasourceType;
+import kr.revelope.spring.batch.admin.mapper.StepExecutionMysqlMapper;
+import kr.revelope.spring.batch.admin.mapper.StepExecutionOracleMapper;
 import kr.revelope.spring.batch.admin.model.StepExecution;
 
 @Repository
-public class StepExecutionRepositoryImpl implements  StepExecutionRepository{
+public class StepExecutionRepositoryImpl implements StepExecutionRepository {
 	private final String tablePrefix;
+	private final DatasourceType datasourceType;
 
-	private final StepExecutionMapper stepExecutionMapper;
+	private final StepExecutionOracleMapper stepExecutionOracleMapper;
+	private final StepExecutionMysqlMapper stepExecutionMysqlMapper;
 
 	public StepExecutionRepositoryImpl(
 			@Value("${spring.batch.table-prefix}") String tablePrefix,
-			StepExecutionMapper stepExecutionMapper) {
+			@Value("${spring.datasource.hikari.driver-class-name}") String driverClassName,
+			StepExecutionOracleMapper stepExecutionOracleMapper,
+			StepExecutionMysqlMapper stepExecutionMysqlMapper) {
 		this.tablePrefix = tablePrefix;
-		this.stepExecutionMapper = stepExecutionMapper;
+		this.datasourceType = DatasourceType.get(driverClassName);
+		this.stepExecutionOracleMapper = stepExecutionOracleMapper;
+		this.stepExecutionMysqlMapper = stepExecutionMysqlMapper;
 	}
 
 	@Override
 	public StepExecution selectStepExecution(long stepExecutionId) {
-		return stepExecutionMapper.selectStepExecution(stepExecutionId, tablePrefix);
+		if (DatasourceType.ORACLE == datasourceType) {
+			return stepExecutionOracleMapper.selectStepExecution(stepExecutionId, tablePrefix);
+		} else {
+			return stepExecutionMysqlMapper.selectStepExecution(stepExecutionId, tablePrefix);
+		}
 	}
 
 	@Override
 	public List<StepExecution> selectStepExecutionList(long jobExecutionId) {
-		return stepExecutionMapper.selectStepExecutionList(jobExecutionId, tablePrefix);
+		if (DatasourceType.ORACLE == datasourceType) {
+			return stepExecutionOracleMapper.selectStepExecutionList(jobExecutionId, tablePrefix);
+		} else {
+			return stepExecutionMysqlMapper.selectStepExecutionList(jobExecutionId, tablePrefix);
+		}
 	}
 
 	@Override
 	public long selectMaxStepExecutionId(long jobExecutionId) {
-		return stepExecutionMapper.selectMaxStepExecutionId(jobExecutionId, tablePrefix);
+		if (DatasourceType.ORACLE == datasourceType) {
+			return stepExecutionOracleMapper.selectMaxStepExecutionId(jobExecutionId, tablePrefix);
+		} else {
+			return stepExecutionMysqlMapper.selectMaxStepExecutionId(jobExecutionId, tablePrefix);
+		}
 	}
 
 	@Override
 	public void deleteStepExecutionContextLessThan(long stepExecutionId) {
-		stepExecutionMapper.deleteStepExecutionContextLessThan(stepExecutionId, tablePrefix);
+		if (DatasourceType.ORACLE == datasourceType) {
+			stepExecutionOracleMapper.deleteStepExecutionContextLessThan(stepExecutionId, tablePrefix);
+		} else {
+			stepExecutionMysqlMapper.deleteStepExecutionContextLessThan(stepExecutionId, tablePrefix);
+		}
 	}
 
 	@Override
 	public void deleteStepExecutionLessThan(long stepExecutionId) {
-		stepExecutionMapper.deleteStepExecutionLessThan(stepExecutionId, tablePrefix);
+		if (DatasourceType.ORACLE == datasourceType) {
+			stepExecutionOracleMapper.deleteStepExecutionLessThan(stepExecutionId, tablePrefix);
+		} else {
+			stepExecutionMysqlMapper.deleteStepExecutionLessThan(stepExecutionId, tablePrefix);
+		}
 	}
 }

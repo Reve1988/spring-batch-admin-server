@@ -9,7 +9,7 @@ import kr.revelope.spring.batch.admin.model.JobExecution;
 import kr.revelope.spring.batch.admin.model.JobExecutionParam;
 
 @Mapper
-public interface JobExecutionMapper {
+public interface JobExecutionOracleMapper {
 	JobExecution selectJobExecution(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
 	int selectJobExecutionTotalCount(@Param("jobNameList") List<String> jobNameList, @Param("tablePrefix") String tablePrefix);
