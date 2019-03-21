@@ -4,7 +4,7 @@ import kr.revelope.spring.batch.admin.common.exception.UnsupportedDatasourceExce
 
 public enum DatasourceType {
 	ORACLE("oracle.jdbc.driver.OracleDriver"),
-	MY_SQL("com.mysql.jdbc.Driver");
+	MY_SQL("com.mysql.cj.jdbc.Driver");
 
 	private final String driverClassName;
 
