@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.revelope.spring.batch.admin.mapper.JobExecutionOracleMapper">
+	<select id="selectJobExecution" resultType="jobExecution">
+		SELECT
+			exe.job_execution_id AS jobExecutionId
+		    , exe.version AS version
+			, exe.job_instance_id AS jobInstanceId
+		   	, inst.job_name AS jobName
+			, exe.create_time AS createTime
+		   	, exe.start_time AS startTime
+			, exe.end_time AS endTime
+			, exe.status AS status
+			, exe.exit_code AS exitCode
+			, exe.exit_message AS exitMessage
+			, exe.last_updated AS lastUpdated
+			, exe.job_configuration_location AS jobConfigurationLocation
+		FROM
+			${tablePrefix}_job_instance inst
+			, ${tablePrefix}_job_execution exe
+		WHERE
+			inst.job_instance_id = exe.job_instance_id
+		  AND exe.job_execution_id = #{jobExecutionId}
+	</select>
+
+	<select id="selectJobExecutionTotalCount" resultType="int">
+		SELECT
+			COUNT(1)
+		FROM
+			${tablePrefix}_job_instance inst
+			, ${tablePrefix}_job_execution exe
+		WHERE
+			inst.job_instance_id = exe.job_instance_id
+			AND inst.job_name IN
+			<foreach collection="jobNameList" item="jobName" open="(" close=")" separator=",">
+				#{jobName}
+			</foreach>
+	</select>
+
+	<select id="selectJobExecutionList" resultType="jobExecution">
+		SELECT
+			jobExecutionId
+			, version
+			, jobInstanceId
+			, jobName
+			, createTime
+			, startTime
+			, endTime
+			, status
+			, exitCode
+			, exitMessage
+			, lastUpdated
+			, jobConfigurationLocation
+		FROM (
+			SELECT
+				ROWNUM AS rnum
+				, jobExecutionId
+				, version
+				, jobInstanceId
+				, jobName
+				, createTime
+				, startTime
+				, endTime
+				, status
+				, exitCode
+				, exitMessage
+				, lastUpdated
+				, jobConfigurationLocation
+			FROM (
+				SELECT
+					exe.job_execution_id AS jobExecutionId
+					, exe.version AS version
+					, exe.job_instance_id AS jobInstanceId
+					, inst.job_name AS jobName
+					, exe.create_time AS createTime
+					, exe.start_time AS startTime
+					, exe.end_time AS endTime
+					, exe.status AS status
+					, exe.exit_code AS exitCode
+					, exe.exit_message AS exitMessage
+					, exe.last_updated AS lastUpdated
+					, exe.job_configuration_location AS jobConfigurationLocation
+				FROM
+					${tablePrefix}_job_instance inst
+					, ${tablePrefix}_job_execution exe
+				WHERE
+					inst.job_instance_id = exe.job_instance_id
+					AND inst.job_name IN
+					<foreach collection="jobNameList" item="jobName" open="(" close=")" separator=",">
+						#{jobName}
+					</foreach>
+				ORDER BY
+					exe.job_execution_id DESC
+				)
+			)
+		WHERE
+			rnum BETWEEN #{start} AND (#{start} + #{length})
+	</select>
+
+	<select id="selectMaxJobExecutionIdLessThan" resultType="long">
+		SELECT
+			NVL(MAX(job_execution_id), 0) AS maxJabExecutionId
+		FROM
+			${tablePrefix}_job_execution
+		WHERE
+			create_time <![CDATA[<]]> TO_DATE(#{createDate}, 'yyyyMMdd')
+	</select>
+
+	<select id="selectJobExecutionParamList" resultType="jobExecutionParam">
+		SELECT
+			type_cd AS typeCode
+			, key_name AS keyName
+			, string_val AS stringValue
+			, date_val AS dateValue
+			, long_val AS longValue
+			, double_val AS doubleValue
+			, identifying AS identifying
+		FROM
+			${tablePrefix}_job_execution_params
+		WHERE
+			job_execution_id = #{jobExecutionId}
+	</select>
+
+	<delete id="deleteJobExecutionParamLessThan">
+		DELETE FROM
+			${tablePrefix}_job_execution_params
+		WHERE
+			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+	</delete>
+
+	<delete id="deleteJobExecutionContextLessThan">
+		DELETE FROM
+			${tablePrefix}_job_execution_context
+		WHERE
+			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+	</delete>
+
+	<delete id="deleteJobExecutionLessThan">
+		DELETE FROM
+			${tablePrefix}_job_execution
+		WHERE
+			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+	</delete>
+</mapper>

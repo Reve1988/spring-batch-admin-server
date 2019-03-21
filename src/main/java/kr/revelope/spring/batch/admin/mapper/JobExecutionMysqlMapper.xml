@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.revelope.spring.batch.admin.mapper.JobExecutionMapper">
+<mapper namespace="kr.revelope.spring.batch.admin.mapper.JobExecutionMysqlMapper">
 	<select id="selectJobExecution" resultType="jobExecution">
 		SELECT
 			exe.job_execution_id AS jobExecutionId
@@ -18,8 +18,8 @@
 			, exe.last_updated AS lastUpdated
 			, exe.job_configuration_location AS jobConfigurationLocation
 		FROM
-			${tablePrefix}_job_instance inst
-			, ${tablePrefix}_job_execution exe
+			${tablePrefix}_JOB_INSTANCE inst
+			, ${tablePrefix}_JOB_EXECUTION exe
 		WHERE
 			inst.job_instance_id = exe.job_instance_id
 		  AND exe.job_execution_id = #{jobExecutionId}
@@ -29,8 +29,8 @@
 		SELECT
 			COUNT(1)
 		FROM
-			${tablePrefix}_job_instance inst
-			, ${tablePrefix}_job_execution exe
+			${tablePrefix}_JOB_INSTANCE inst
+			, ${tablePrefix}_JOB_EXECUTION exe
 		WHERE
 			inst.job_instance_id = exe.job_instance_id
 			AND inst.job_name IN
@@ -55,7 +55,7 @@
 			, jobConfigurationLocation
 		FROM (
 			SELECT
-				ROWNUM AS rnum
+				@rownum:=@rownum+1 AS rnum
 				, jobExecutionId
 				, version
 				, jobInstanceId
@@ -83,8 +83,9 @@
 					, exe.last_updated AS lastUpdated
 					, exe.job_configuration_location AS jobConfigurationLocation
 				FROM
-					${tablePrefix}_job_instance inst
-					, ${tablePrefix}_job_execution exe
+					${tablePrefix}_JOB_INSTANCE inst
+					, ${tablePrefix}_JOB_EXECUTION exe
+					, (SELECT @rownum := 0) R
 				WHERE
 					inst.job_instance_id = exe.job_instance_id
 					AND inst.job_name IN
@@ -101,11 +102,11 @@
 
 	<select id="selectMaxJobExecutionIdLessThan" resultType="long">
 		SELECT
-			NVL(MAX(job_execution_id), 0) AS maxJabExecutionId
+			IFNULL(MAX(job_execution_id), 0) AS maxJabExecutionId
 		FROM
-			${tablePrefix}_job_execution
+			${tablePrefix}_JOB_EXECUTION
 		WHERE
-			create_time <![CDATA[<]]> TO_DATE(#{createDate}, 'yyyyMMdd')
+			create_time <![CDATA[<]]> STR_TO_DATE(#{createDate}, 'yyyyMMdd')
 	</select>
 
 	<select id="selectJobExecutionParamList" resultType="jobExecutionParam">
@@ -118,28 +119,28 @@
 			, double_val AS doubleValue
 			, identifying AS identifying
 		FROM
-			${tablePrefix}_job_execution_params
+			${tablePrefix}_JOB_EXECUTION_PARAMS
 		WHERE
 			job_execution_id = #{jobExecutionId}
 	</select>
 
 	<delete id="deleteJobExecutionParamLessThan">
 		DELETE FROM
-			${tablePrefix}_job_execution_params
+			${tablePrefix}_JOB_EXECUTION_PARAMS
 		WHERE
 			job_execution_id <![CDATA[<]]> #{jobExecutionId}
 	</delete>
 
 	<delete id="deleteJobExecutionContextLessThan">
 		DELETE FROM
-			${tablePrefix}_job_execution_context
+			${tablePrefix}_JOB_EXECUTION_CONTEXT
 		WHERE
 			job_execution_id <![CDATA[<]]> #{jobExecutionId}
 	</delete>
 
 	<delete id="deleteJobExecutionLessThan">
 		DELETE FROM
-			${tablePrefix}_job_execution
+			${tablePrefix}_JOB_EXECUTION
 		WHERE
 			job_execution_id <![CDATA[<]]> #{jobExecutionId}
 	</delete>
