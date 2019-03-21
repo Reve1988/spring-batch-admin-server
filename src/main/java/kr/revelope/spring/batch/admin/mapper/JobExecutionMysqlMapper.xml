@@ -85,7 +85,6 @@
 				FROM
 					${tablePrefix}_JOB_INSTANCE inst
 					, ${tablePrefix}_JOB_EXECUTION exe
-					, (SELECT @rownum := 0) R
 				WHERE
 					inst.job_instance_id = exe.job_instance_id
 					AND inst.job_name IN
@@ -94,10 +93,11 @@
 					</foreach>
 				ORDER BY
 					exe.job_execution_id DESC
-				)
-			)
+				) A
+				, (SELECT @rownum := 0) R
+			) AA
 		WHERE
-			rnum BETWEEN #{start} AND (#{start} + #{length})
+			AA.rnum BETWEEN #{start} AND (#{start} + #{length})
 	</select>
 
 	<select id="selectMaxJobExecutionIdLessThan" resultType="long">
