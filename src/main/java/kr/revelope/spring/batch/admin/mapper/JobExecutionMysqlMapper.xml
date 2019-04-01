@@ -106,7 +106,7 @@
 		FROM
 			${tablePrefix}_JOB_EXECUTION
 		WHERE
-			create_time <![CDATA[<]]> STR_TO_DATE(#{createDate}, 'yyyyMMdd')
+			create_time <![CDATA[<]]> #{createDate}
 	</select>
 
 	<select id="selectJobExecutionParamList" resultType="jobExecutionParam">
