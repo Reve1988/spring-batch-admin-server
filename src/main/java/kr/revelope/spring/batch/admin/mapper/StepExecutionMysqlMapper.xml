@@ -59,21 +59,21 @@
 		SELECT
 			IFNULL(MAX(step_execution_id), 0) AS maxStepExecutionId
 		FROM
-			${tablePrefix}_step_execution
+			${tablePrefix}_STEP_EXECUTION
 		WHERE
 			job_execution_id = #{jobExecutionId}
 	</select>
 
 	<delete id="deleteStepExecutionContextLessThan">
 		DELETE FROM
-			${tablePrefix}_step_execution_context
+			${tablePrefix}_STEP_EXECUTION_CONTEXT
 		WHERE
 			step_execution_id <![CDATA[<]]> #{stepExecutionId}
 	</delete>
 
 	<delete id="deleteStepExecutionLessThan">
 		DELETE FROM
-			${tablePrefix}_step_execution
+			${tablePrefix}_STEP_EXECUTION
 		WHERE
 			step_execution_id <![CDATA[<]]> #{stepExecutionId}
 	</delete>
