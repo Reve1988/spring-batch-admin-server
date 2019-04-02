@@ -69,6 +69,15 @@ public class JobExecutionRepositoryImpl implements JobExecutionRepository {
 	}
 
 	@Override
+	public long selectMaxJobInstanceIdLessThan(String createDate) {
+		if (DatasourceType.ORACLE == datasourceType) {
+			return jobExecutionOracleMapper.selectMaxJobInstanceIdLessThan(createDate, tablePrefix);
+		} else {
+			return jobExecutionMysqlMapper.selectMaxJobInstanceIdLessThan(createDate, tablePrefix);
+		}
+	}
+
+	@Override
 	public List<JobExecutionParam> selectJobExecutionParamList(long jobExecutionId) {
 		if (DatasourceType.ORACLE == datasourceType) {
 			return jobExecutionOracleMapper.selectJobExecutionParamList(jobExecutionId, tablePrefix);

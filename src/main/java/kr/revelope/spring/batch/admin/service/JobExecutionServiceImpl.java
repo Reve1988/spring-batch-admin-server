@@ -57,6 +57,11 @@ public class JobExecutionServiceImpl implements JobExecutionService {
 	}
 
 	@Override
+	public long getMaxJobInstanceIdBefore(LocalDate date) {
+		return jobExecutionRepository.selectMaxJobInstanceIdLessThan(date.format(DEFAULT_DATE_FORMATTER));
+	}
+
+	@Override
 	public List<JobExecutionParam> getJobExecutionParamList(long jobExecutionId) {
 		return jobExecutionRepository.selectJobExecutionParamList(jobExecutionId);
 	}

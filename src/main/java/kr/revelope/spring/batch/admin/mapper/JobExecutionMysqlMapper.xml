@@ -102,7 +102,16 @@
 
 	<select id="selectMaxJobExecutionIdLessThan" resultType="long">
 		SELECT
-			IFNULL(MAX(job_execution_id), 0) AS maxJabExecutionId
+			IFNULL(MAX(job_execution_id), 0) AS maxJobExecutionId
+		FROM
+			${tablePrefix}_JOB_EXECUTION
+		WHERE
+			create_time <![CDATA[<]]> #{createDate}
+	</select>
+
+	<select id="selectMaxJobInstanceIdLessThan" resultType="long">
+		SELECT
+			IFNULL(MAX(job_instance_id), 0) AS maxJobInstanceId
 		FROM
 			${tablePrefix}_JOB_EXECUTION
 		WHERE

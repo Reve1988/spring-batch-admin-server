@@ -101,7 +101,16 @@
 
 	<select id="selectMaxJobExecutionIdLessThan" resultType="long">
 		SELECT
-			NVL(MAX(job_execution_id), 0) AS maxJabExecutionId
+			NVL(MAX(job_execution_id), 0) AS maxJobExecutionId
+		FROM
+			${tablePrefix}_job_execution
+		WHERE
+			create_time <![CDATA[<]]> TO_DATE(#{createDate}, 'yyyyMMdd')
+	</select>
+
+	<select id="selectMaxJobInstanceIdLessThan" resultType="long">
+		SELECT
+			NVL(MAX(job_instance_id), 0) AS maxJobInstanceId
 		FROM
 			${tablePrefix}_job_execution
 		WHERE

@@ -18,6 +18,8 @@ public interface JobExecutionMysqlMapper {
 
 	long selectMaxJobExecutionIdLessThan(@Param("createDate") String createDate, @Param("tablePrefix") String tablePrefix);
 
+	long selectMaxJobInstanceIdLessThan(@Param("createDate") String createDate, @Param("tablePrefix") String tablePrefix);
+
 	List<JobExecutionParam> selectJobExecutionParamList(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
 	void deleteJobExecutionParamLessThan(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);

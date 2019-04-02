@@ -30,12 +30,7 @@ public class JobInstanceServiceImpl implements JobInstanceService {
 	}
 
 	@Override
-	public void deleteLessThan(long jobExecutionId) {
-		JobExecution jobExecution = jobExecutionService.getJobExecution(jobExecutionId);
-		if (jobExecution == null) {
-			return;
-		}
-
-		jobInstanceRepository.deleteJobInstanceLessThan(jobExecution.getJobInstanceId());
+	public void deleteLessThan(long jobInstanceId) {
+		jobInstanceRepository.deleteJobInstanceLessThan(jobInstanceId);
 	}
 }

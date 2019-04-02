@@ -14,6 +14,8 @@ public interface JobExecutionRepository {
 
     long selectMaxJobExecutionIdLessThan(String createDate);
 
+    long selectMaxJobInstanceIdLessThan(String createDate);
+
     List<JobExecutionParam> selectJobExecutionParamList(long jobExecutionId);
 
     void deleteJobExecutionParamLessThan(long jobExecutionId);
