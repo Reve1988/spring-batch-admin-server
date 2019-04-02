@@ -18,9 +18,9 @@ public interface JobExecutionRepository {
 
     List<JobExecutionParam> selectJobExecutionParamList(long jobExecutionId);
 
-    void deleteJobExecutionParamLessThan(long jobExecutionId);
+    void deleteJobExecutionParamLessThanOrEqualTo(long jobExecutionId);
 
-    void deleteJobExecutionContextLessThan(long jobExecutionId);
+    void deleteJobExecutionContextLessThanOrEqualTo(long jobExecutionId);
 
-    void deleteJobExecutionLessThan(long jobExecutionId);
+    void deleteJobExecutionLessThanOrEqualTo(long jobExecutionId);
 }

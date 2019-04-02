@@ -67,9 +67,9 @@ public class JobExecutionServiceImpl implements JobExecutionService {
 	}
 
 	@Override
-	public void deleteLessThan(long jobExecutionId) {
-		jobExecutionRepository.deleteJobExecutionParamLessThan(jobExecutionId);
-		jobExecutionRepository.deleteJobExecutionContextLessThan(jobExecutionId);
-		jobExecutionRepository.deleteJobExecutionLessThan(jobExecutionId);
+	public void deleteLessThanOrEqualTo(long jobExecutionId) {
+		jobExecutionRepository.deleteJobExecutionParamLessThanOrEqualTo(jobExecutionId);
+		jobExecutionRepository.deleteJobExecutionContextLessThanOrEqualTo(jobExecutionId);
+		jobExecutionRepository.deleteJobExecutionLessThanOrEqualTo(jobExecutionId);
 	}
 }

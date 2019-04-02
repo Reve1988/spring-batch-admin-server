@@ -19,5 +19,5 @@ public interface JobExecutionService {
 
 	List<JobExecutionParam> getJobExecutionParamList(long jobExecutionId);
 
-	void deleteLessThan(long jobExecutionId);
+	void deleteLessThanOrEqualTo(long jobExecutionId);
 }

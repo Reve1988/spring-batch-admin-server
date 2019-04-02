@@ -9,5 +9,5 @@ import kr.revelope.spring.batch.admin.model.JobInstance;
 public interface JobInstanceMysqlMapper {
 	JobInstance selectJobInstance(@Param("jobInstanceId") long jobInstanceId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteJobInstanceLessThan(@Param("jobInstanceId") long jobInstanceId, @Param("tablePrefix") String tablePrefix);
+	void deleteJobInstanceLessThanOrEqualTo(@Param("jobInstanceId") long jobInstanceId, @Param("tablePrefix") String tablePrefix);
 }

@@ -5,5 +5,5 @@ import kr.revelope.spring.batch.admin.model.JobInstance;
 public interface JobInstanceService {
 	JobInstance getJobInstance(long jobInstanceId);
 
-	void deleteLessThan(long jobInstanceId);
+	void deleteLessThanOrEqualTo(long jobInstanceId);
 }

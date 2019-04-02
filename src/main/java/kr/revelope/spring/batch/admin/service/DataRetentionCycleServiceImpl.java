@@ -32,9 +32,9 @@ public class DataRetentionCycleServiceImpl implements DataRetentionCycleService 
 		long maxJobExecutionId = jobExecutionService.getMaxJobExecutionIdBefore(date);
 		long maxJobInstanceId = jobExecutionService.getMaxJobInstanceIdBefore(date);
 
-		stepExecutionService.deleteLessThan(maxJobExecutionId);
-		jobExecutionService.deleteLessThan(maxJobExecutionId);
+		stepExecutionService.deleteLessThanOrEqualTo(maxJobExecutionId);
+		jobExecutionService.deleteLessThanOrEqualTo(maxJobExecutionId);
 
-		jobInstanceService.deleteLessThan(maxJobInstanceId);
+		jobInstanceService.deleteLessThanOrEqualTo(maxJobInstanceId);
 	}
 }

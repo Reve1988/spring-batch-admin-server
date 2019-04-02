@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.revelope.spring.batch.admin.model.JobExecution;
 import kr.revelope.spring.batch.admin.model.JobInstance;
 import kr.revelope.spring.batch.admin.repository.JobInstanceRepository;
 
@@ -30,7 +29,7 @@ public class JobInstanceServiceImpl implements JobInstanceService {
 	}
 
 	@Override
-	public void deleteLessThan(long jobInstanceId) {
-		jobInstanceRepository.deleteJobInstanceLessThan(jobInstanceId);
+	public void deleteLessThanOrEqualTo(long jobInstanceId) {
+		jobInstanceRepository.deleteJobInstanceLessThanOrEqualTo(jobInstanceId);
 	}
 }

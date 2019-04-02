@@ -11,7 +11,7 @@ public interface StepExecutionRepository {
 
 	long selectMaxStepExecutionId(long jobExecutionId);
 
-	void deleteStepExecutionContextLessThan(long stepExecutionId);
+	void deleteStepExecutionContextLessThanOrEqualTo(long stepExecutionId);
 
-	void deleteStepExecutionLessThan(long stepExecutionId);
+	void deleteStepExecutionLessThanOrEqualTo(long stepExecutionId);
 }

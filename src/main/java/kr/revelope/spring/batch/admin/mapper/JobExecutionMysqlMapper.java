@@ -22,9 +22,9 @@ public interface JobExecutionMysqlMapper {
 
 	List<JobExecutionParam> selectJobExecutionParamList(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteJobExecutionParamLessThan(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
+	void deleteJobExecutionParamLessThanOrEqualTo(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteJobExecutionContextLessThan(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
+	void deleteJobExecutionContextLessThanOrEqualTo(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteJobExecutionLessThan(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
+	void deleteJobExecutionLessThanOrEqualTo(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 }

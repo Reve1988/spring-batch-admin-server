@@ -33,10 +33,10 @@ public class StepExecutionServiceImpl implements StepExecutionService {
 	}
 
 	@Override
-	public void deleteLessThan(long jobExecutionId) {
+	public void deleteLessThanOrEqualTo(long jobExecutionId) {
 		long maxStepExecutionId = stepExecutionRepository.selectMaxStepExecutionId(jobExecutionId);
 
-		stepExecutionRepository.deleteStepExecutionContextLessThan(maxStepExecutionId);
-		stepExecutionRepository.deleteStepExecutionLessThan(maxStepExecutionId);
+		stepExecutionRepository.deleteStepExecutionContextLessThanOrEqualTo(maxStepExecutionId);
+		stepExecutionRepository.deleteStepExecutionLessThanOrEqualTo(maxStepExecutionId);
 	}
 }

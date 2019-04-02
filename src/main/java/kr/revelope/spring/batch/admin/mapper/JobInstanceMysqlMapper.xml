@@ -15,10 +15,10 @@
 			job_instance_id = #{jobInstanceId}
 	</select>
 
-	<delete id="deleteJobInstanceLessThan">
+	<delete id="deleteJobInstanceLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_JOB_INSTANCE
 		WHERE
-			job_instance_id <![CDATA[<]]> #{jobInstanceId}
+			job_instance_id <![CDATA[<=]]> #{jobInstanceId}
 	</delete>
 </mapper>

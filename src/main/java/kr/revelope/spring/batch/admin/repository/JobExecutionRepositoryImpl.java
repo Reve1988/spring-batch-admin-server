@@ -87,29 +87,29 @@ public class JobExecutionRepositoryImpl implements JobExecutionRepository {
 	}
 
 	@Override
-	public void deleteJobExecutionParamLessThan(long jobExecutionId) {
+	public void deleteJobExecutionParamLessThanOrEqualTo(long jobExecutionId) {
 		if (DatasourceType.ORACLE == datasourceType) {
-			jobExecutionOracleMapper.deleteJobExecutionParamLessThan(jobExecutionId, tablePrefix);
+			jobExecutionOracleMapper.deleteJobExecutionParamLessThanOrEqualTo(jobExecutionId, tablePrefix);
 		} else {
-			jobExecutionMysqlMapper.deleteJobExecutionParamLessThan(jobExecutionId, tablePrefix);
+			jobExecutionMysqlMapper.deleteJobExecutionParamLessThanOrEqualTo(jobExecutionId, tablePrefix);
 		}
 	}
 
 	@Override
-	public void deleteJobExecutionContextLessThan(long jobExecutionId) {
+	public void deleteJobExecutionContextLessThanOrEqualTo(long jobExecutionId) {
 		if (DatasourceType.ORACLE == datasourceType) {
-			jobExecutionOracleMapper.deleteJobExecutionContextLessThan(jobExecutionId, tablePrefix);
+			jobExecutionOracleMapper.deleteJobExecutionContextLessThanOrEqualTo(jobExecutionId, tablePrefix);
 		} else {
-			jobExecutionMysqlMapper.deleteJobExecutionContextLessThan(jobExecutionId, tablePrefix);
+			jobExecutionMysqlMapper.deleteJobExecutionContextLessThanOrEqualTo(jobExecutionId, tablePrefix);
 		}
 	}
 
 	@Override
-	public void deleteJobExecutionLessThan(long jobExecutionId) {
+	public void deleteJobExecutionLessThanOrEqualTo(long jobExecutionId) {
 		if (DatasourceType.ORACLE == datasourceType) {
-			jobExecutionOracleMapper.deleteJobExecutionLessThan(jobExecutionId, tablePrefix);
+			jobExecutionOracleMapper.deleteJobExecutionLessThanOrEqualTo(jobExecutionId, tablePrefix);
 		} else {
-			jobExecutionMysqlMapper.deleteJobExecutionLessThan(jobExecutionId, tablePrefix);
+			jobExecutionMysqlMapper.deleteJobExecutionLessThanOrEqualTo(jobExecutionId, tablePrefix);
 		}
 	}
 }

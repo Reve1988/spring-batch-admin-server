@@ -57,20 +57,20 @@ public class StepExecutionRepositoryImpl implements StepExecutionRepository {
 	}
 
 	@Override
-	public void deleteStepExecutionContextLessThan(long stepExecutionId) {
+	public void deleteStepExecutionContextLessThanOrEqualTo(long stepExecutionId) {
 		if (DatasourceType.ORACLE == datasourceType) {
-			stepExecutionOracleMapper.deleteStepExecutionContextLessThan(stepExecutionId, tablePrefix);
+			stepExecutionOracleMapper.deleteStepExecutionContextLessThanOrEqualTo(stepExecutionId, tablePrefix);
 		} else {
-			stepExecutionMysqlMapper.deleteStepExecutionContextLessThan(stepExecutionId, tablePrefix);
+			stepExecutionMysqlMapper.deleteStepExecutionContextLessThanOrEqualTo(stepExecutionId, tablePrefix);
 		}
 	}
 
 	@Override
-	public void deleteStepExecutionLessThan(long stepExecutionId) {
+	public void deleteStepExecutionLessThanOrEqualTo(long stepExecutionId) {
 		if (DatasourceType.ORACLE == datasourceType) {
-			stepExecutionOracleMapper.deleteStepExecutionLessThan(stepExecutionId, tablePrefix);
+			stepExecutionOracleMapper.deleteStepExecutionLessThanOrEqualTo(stepExecutionId, tablePrefix);
 		} else {
-			stepExecutionMysqlMapper.deleteStepExecutionLessThan(stepExecutionId, tablePrefix);
+			stepExecutionMysqlMapper.deleteStepExecutionLessThanOrEqualTo(stepExecutionId, tablePrefix);
 		}
 	}
 }

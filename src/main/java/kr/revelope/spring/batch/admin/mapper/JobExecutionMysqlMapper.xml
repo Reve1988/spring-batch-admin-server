@@ -133,24 +133,24 @@
 			job_execution_id = #{jobExecutionId}
 	</select>
 
-	<delete id="deleteJobExecutionParamLessThan">
+	<delete id="deleteJobExecutionParamLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_JOB_EXECUTION_PARAMS
 		WHERE
-			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+			job_execution_id <![CDATA[<=]]> #{jobExecutionId}
 	</delete>
 
-	<delete id="deleteJobExecutionContextLessThan">
+	<delete id="deleteJobExecutionContextLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_JOB_EXECUTION_CONTEXT
 		WHERE
-			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+			job_execution_id <![CDATA[<=]]> #{jobExecutionId}
 	</delete>
 
-	<delete id="deleteJobExecutionLessThan">
+	<delete id="deleteJobExecutionLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_JOB_EXECUTION
 		WHERE
-			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+			job_execution_id <![CDATA[<=]]> #{jobExecutionId}
 	</delete>
 </mapper>
