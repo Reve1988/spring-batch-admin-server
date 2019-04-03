@@ -15,7 +15,7 @@ public interface StepExecutionOracleMapper {
 
 	long selectMaxStepExecutionId(@Param("jobExecutionId") long jobExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteStepExecutionContextLessThan(@Param("stepExecutionId") long stepExecutionId, @Param("tablePrefix") String tablePrefix);
+	void deleteStepExecutionContextLessThanOrEqualTo(@Param("stepExecutionId") long stepExecutionId, @Param("tablePrefix") String tablePrefix);
 
-	void deleteStepExecutionLessThan(@Param("stepExecutionId") long stepExecutionId, @Param("tablePrefix") String tablePrefix);
+	void deleteStepExecutionLessThanOrEqualTo(@Param("stepExecutionId") long stepExecutionId, @Param("tablePrefix") String tablePrefix);
 }

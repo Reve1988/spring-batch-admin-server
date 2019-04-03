@@ -64,17 +64,17 @@
 			job_execution_id = #{jobExecutionId}
 	</select>
 
-	<delete id="deleteStepExecutionContextLessThan">
+	<delete id="deleteStepExecutionContextLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_step_execution_context
 		WHERE
-			step_execution_id <![CDATA[<]]> #{stepExecutionId}
+			step_execution_id <![CDATA[<=]]> #{stepExecutionId}
 	</delete>
 
-	<delete id="deleteStepExecutionLessThan">
+	<delete id="deleteStepExecutionLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_step_execution
 		WHERE
-			step_execution_id <![CDATA[<]]> #{stepExecutionId}
+			step_execution_id <![CDATA[<=]]> #{stepExecutionId}
 	</delete>
 </mapper>

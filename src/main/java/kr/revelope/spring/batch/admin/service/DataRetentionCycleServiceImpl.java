@@ -30,9 +30,11 @@ public class DataRetentionCycleServiceImpl implements DataRetentionCycleService 
 	@Transactional
 	public void clearBefore(LocalDate date) {
 		long maxJobExecutionId = jobExecutionService.getMaxJobExecutionIdBefore(date);
+		long maxJobInstanceId = jobExecutionService.getMaxJobInstanceIdBefore(date);
 
-		stepExecutionService.deleteLessThan(maxJobExecutionId);
-		jobInstanceService.deleteLessThan(maxJobExecutionId);
-		jobExecutionService.deleteLessThan(maxJobExecutionId);
+		stepExecutionService.deleteLessThanOrEqualTo(maxJobExecutionId);
+		jobExecutionService.deleteLessThanOrEqualTo(maxJobExecutionId);
+
+		jobInstanceService.deleteLessThanOrEqualTo(maxJobInstanceId);
 	}
 }

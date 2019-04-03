@@ -14,11 +14,13 @@ public interface JobExecutionRepository {
 
     long selectMaxJobExecutionIdLessThan(String createDate);
 
+    long selectMaxJobInstanceIdLessThan(String createDate);
+
     List<JobExecutionParam> selectJobExecutionParamList(long jobExecutionId);
 
-    void deleteJobExecutionParamLessThan(long jobExecutionId);
+    void deleteJobExecutionParamLessThanOrEqualTo(long jobExecutionId);
 
-    void deleteJobExecutionContextLessThan(long jobExecutionId);
+    void deleteJobExecutionContextLessThanOrEqualTo(long jobExecutionId);
 
-    void deleteJobExecutionLessThan(long jobExecutionId);
+    void deleteJobExecutionLessThanOrEqualTo(long jobExecutionId);
 }

@@ -37,11 +37,11 @@ public class JobInstanceRepositoryImpl implements JobInstanceRepository {
 	}
 
 	@Override
-	public void deleteJobInstanceLessThan(long jobInstanceId) {
+	public void deleteJobInstanceLessThanOrEqualTo(long jobInstanceId) {
 		if (DatasourceType.ORACLE == datasourceType) {
-			jobInstanceOracleMapper.deleteJobInstanceLessThan(jobInstanceId, tablePrefix);
+			jobInstanceOracleMapper.deleteJobInstanceLessThanOrEqualTo(jobInstanceId, tablePrefix);
 		} else {
-			jobInstanceMysqlMapper.deleteJobInstanceLessThan(jobInstanceId, tablePrefix);
+			jobInstanceMysqlMapper.deleteJobInstanceLessThanOrEqualTo(jobInstanceId, tablePrefix);
 		}
 	}
 }

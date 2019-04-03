@@ -9,5 +9,5 @@ public interface StepExecutionService {
 
 	List<StepExecution> getStepExecutionList(long jobExecutionId);
 
-	void deleteLessThan(long jobExecutionId);
+	void deleteLessThanOrEqualTo(long jobExecutionId);
 }

@@ -101,7 +101,16 @@
 
 	<select id="selectMaxJobExecutionIdLessThan" resultType="long">
 		SELECT
-			NVL(MAX(job_execution_id), 0) AS maxJabExecutionId
+			NVL(MAX(job_execution_id), 0) AS maxJobExecutionId
+		FROM
+			${tablePrefix}_job_execution
+		WHERE
+			create_time <![CDATA[<]]> TO_DATE(#{createDate}, 'yyyyMMdd')
+	</select>
+
+	<select id="selectMaxJobInstanceIdLessThan" resultType="long">
+		SELECT
+			NVL(MAX(job_instance_id), 0) AS maxJobInstanceId
 		FROM
 			${tablePrefix}_job_execution
 		WHERE
@@ -123,24 +132,24 @@
 			job_execution_id = #{jobExecutionId}
 	</select>
 
-	<delete id="deleteJobExecutionParamLessThan">
+	<delete id="deleteJobExecutionParamLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_job_execution_params
 		WHERE
-			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+			job_execution_id <![CDATA[<=]]> #{jobExecutionId}
 	</delete>
 
-	<delete id="deleteJobExecutionContextLessThan">
+	<delete id="deleteJobExecutionContextLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_job_execution_context
 		WHERE
-			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+			job_execution_id <![CDATA[<=]]> #{jobExecutionId}
 	</delete>
 
-	<delete id="deleteJobExecutionLessThan">
+	<delete id="deleteJobExecutionLessThanOrEqualTo">
 		DELETE FROM
 			${tablePrefix}_job_execution
 		WHERE
-			job_execution_id <![CDATA[<]]> #{jobExecutionId}
+			job_execution_id <![CDATA[<=]]> #{jobExecutionId}
 	</delete>
 </mapper>

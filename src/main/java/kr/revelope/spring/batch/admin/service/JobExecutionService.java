@@ -15,7 +15,9 @@ public interface JobExecutionService {
 
 	long getMaxJobExecutionIdBefore(LocalDate date);
 
+	long getMaxJobInstanceIdBefore(LocalDate date);
+
 	List<JobExecutionParam> getJobExecutionParamList(long jobExecutionId);
 
-	void deleteLessThan(long jobExecutionId);
+	void deleteLessThanOrEqualTo(long jobExecutionId);
 }
